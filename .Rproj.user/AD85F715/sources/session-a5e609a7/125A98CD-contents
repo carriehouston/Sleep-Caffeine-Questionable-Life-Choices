@@ -1,0 +1,27 @@
+# Load dataset
+sleep_data <- read_csv("sleep_debt_screen_time.csv")
+
+#summary statistics
+sleep_data %>%
+  summarise(
+    across(
+      c(
+        caffeine_intake_mg,
+        physical_activity_min,
+        screen_time_before_bed_min,
+        ambient_noise_db,
+        sleep_efficiency_pct,
+        next_day_fatigue_score
+      ),
+      list(
+        min = min,
+        max = max,
+        mean = mean,
+        median = median,
+        sd = sd,
+        IQR = IQR
+      )
+    )
+  )
+
+
