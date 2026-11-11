@@ -67,3 +67,10 @@ check_cleaning(sleep_data$sleep_efficiency_pct,
 # Fatigue score
 check_cleaning(sleep_data$next_day_fatigue_score,
                sleep_data_cleaned$next_day_fatigue_score)
+# Convert blue light filter variable into categories
+sleep_data_cleaned$blue_light_filter_on <- factor(
+  sleep_data$blue_light_filter_on,
+  levels = c(FALSE, TRUE),
+  labels = c("Filter Off", "Filter On")
+)
+sleep_data_cleaned

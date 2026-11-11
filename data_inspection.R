@@ -32,7 +32,7 @@ sleep_data <- sleep_data %>%
   mutate(
     gender = as.factor(gender),
     chronotype = as.factor(chronotype),
-    occupation = as.factor(occis upation),
+    occupation = as.factor(occupation),
     primary_app_category = as.factor(primary_app_category),
     blue_light_filter_on = as.factor(blue_light_filter_on),
     sleep_debt_category = as.factor(sleep_debt_category)
