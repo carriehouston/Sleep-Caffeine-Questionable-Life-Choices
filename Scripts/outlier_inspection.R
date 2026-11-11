@@ -1,5 +1,5 @@
 # Load dataset
-sleep_data <- read_csv("sleep_debt_screen_time.csv")
+sleep_data <- read_csv("../sleep_debt_screen_time.csv")
 
 # outliers for caffeine intake
 Q1 <- quantile(sleep_data$caffeine_intake_mg, 0.25)

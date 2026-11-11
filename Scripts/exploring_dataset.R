@@ -1,9 +1,10 @@
 #Exploring dataset
-
-#Age
+library(tidyverse)
+library(ggplot2)
+sleep_data <- read.csv("../sleep_debt_screen_time.csv")
+#Age vs Sleep efficiency
 ggplot(sleep_data, aes(x = age, y = sleep_efficiency_pct)) +
   geom_point(alpha = 0.3) +
-  geom_smooth(method = "loess") +
   labs(
     title = "Sleep Efficiency Across Ages",
     x = "Age",

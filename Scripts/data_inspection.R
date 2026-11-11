@@ -1,7 +1,7 @@
 library(tidyverse)
 
 # Load dataset
-sleep_data <- read_csv("sleep_debt_screen_time.csv")
+sleep_data <- read_csv("../sleep_debt_screen_time.csv")
 
 # Examine dataset
 glimpse(sleep_data)
