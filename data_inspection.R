@@ -32,7 +32,7 @@ sleep_data <- sleep_data %>%
   mutate(
     gender = as.factor(gender),
     chronotype = as.factor(chronotype),
-    occupation = as.factor(occupation),
+    occupation = as.factor(occis upation),
     primary_app_category = as.factor(primary_app_category),
     blue_light_filter_on = as.factor(blue_light_filter_on),
     sleep_debt_category = as.factor(sleep_debt_category)
@@ -65,6 +65,7 @@ summary_stats <- sleep_data %>%
 
 summary_stats
 print(summary_stats)
+view(summary_stats)
 # Create minimum and maximum data frame
 min_max <- data.frame(
   Variable = c(
@@ -121,7 +122,7 @@ ggplot(min_max_plot, aes(x = Variable, y = Value, fill = Statistic)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(
-  "../Plots/minimum_maximum_plot.png",
+  "minimum_maximum_plot.png",
   width = 10,
   height = 7,
   dpi = 300
