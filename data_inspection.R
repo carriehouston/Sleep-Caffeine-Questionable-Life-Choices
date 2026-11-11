@@ -1,7 +1,7 @@
 library(tidyverse)
 
 # Load dataset
-sleep_data <- read_csv("../sleep_debt_screen_time.csv")
+sleep_data <- read_csv("sleep_debt_screen_time.csv")
 
 # Examine dataset
 glimpse(sleep_data)
@@ -65,7 +65,37 @@ summary_stats <- sleep_data %>%
 
 summary_stats
 print(summary_stats)
+# Create minimum and maximum data frame
+min_max <- data.frame(
+  Variable = c(
+    "Ambient Noise",
+    "Caffeine",
+    "Next Day Fatigue",
+    "Physical Activity",
+    "Screen Time",
+    "Sleep Efficiency"
+  ),
+  
+  Minimum = c(
+    min(sleep_data$ambient_noise_db),
+    min(sleep_data$caffeine_intake_mg),
+    min(sleep_data$next_day_fatigue_score),
+    min(sleep_data$physical_activity_min),
+    min(sleep_data$screen_time_before_bed_min),
+    min(sleep_data$sleep_efficiency_pct)
+  ),
+  
+  Maximum = c(
+    max(sleep_data$ambient_noise_db),
+    max(sleep_data$caffeine_intake_mg),
+    max(sleep_data$next_day_fatigue_score),
+    max(sleep_data$physical_activity_min),
+    max(sleep_data$screen_time_before_bed_min),
+    max(sleep_data$sleep_efficiency_pct)
+  )
+)
 
+min_max
 min_max_plot <- data.frame(
   Variable = rep(min_max$Variable, 2),
   Statistic = c(
@@ -91,7 +121,7 @@ ggplot(min_max_plot, aes(x = Variable, y = Value, fill = Statistic)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave(
-  "minimum_maximum_plot.png",
+  "../Plots/minimum_maximum_plot.png",
   width = 10,
   height = 7,
   dpi = 300
