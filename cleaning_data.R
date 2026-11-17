@@ -74,4 +74,20 @@ sleep_data_cleaned$blue_light_filter_on <- factor(
   levels = c(FALSE, TRUE),
   labels = c("Filter Off", "Filter On")
 )
-sleep_data_cleaned
+
+caffeine <- sleep_data_cleaned$caffeine_intake_mg
+blue_Light <- sleep_data_cleaned$blue_light_filter_on
+screen_Time <- sleep_data_cleaned$screen_time_before_bed_min
+physical_activity <-sleep_data_cleaned$physical_activity_min
+ambient_noise <- sleep_data_cleaned$ambient_noise_db
+next_day_fatigue <- sleep_data_cleaned$next_day_fatigue_score
+sleep_percent <- sleep_data_cleaned$sleep_efficiency_pct
+subset_cleaned <- data.frame(
+  Blue_Light = blue_Light,
+  Screen_Time = screen_Time,
+  Caffeine = caffeine,
+  Physical_Activity = physical_activity,
+  Ambient_noise = ambient_noise,
+  Next_Day_Fatigue_Score = next_day_fatigue,
+  Sleep_Efficiency_Percent = sleep_percent
+)
