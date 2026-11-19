@@ -65,65 +65,35 @@ summary_stats <- sleep_data %>%
 
 summary_stats
 print(summary_stats)
-view(summary_stats)
-# Create minimum and maximum data frame
-min_max <- data.frame(
+min_max_table <- data.frame(
   Variable = c(
-    "Ambient Noise",
-    "Caffeine",
-    "Next Day Fatigue",
-    "Physical Activity",
-    "Screen Time",
-    "Sleep Efficiency"
+    "Ambient Noise (dB)",
+    "Caffeine Intake (mg)",
+    "Next-Day Fatigue Score",
+    "Physical Activity (min)",
+    "Screen Time Before Bed (min)",
+    "Sleep Efficiency (%)"
   ),
   
   Minimum = c(
-    min(sleep_data$ambient_noise_db),
-    min(sleep_data$caffeine_intake_mg),
-    min(sleep_data$next_day_fatigue_score),
-    min(sleep_data$physical_activity_min),
-    min(sleep_data$screen_time_before_bed_min),
-    min(sleep_data$sleep_efficiency_pct)
+    min(sleep_data_cleaned$ambient_noise_db),
+    min(sleep_data_cleaned$caffeine_intake_mg),
+    min(sleep_data_cleaned$next_day_fatigue_score),
+    min(sleep_data_cleaned$physical_activity_min),
+    min(sleep_data_cleaned$screen_time_before_bed_min),
+    min(sleep_data_cleaned$sleep_efficiency_pct)
   ),
   
   Maximum = c(
-    max(sleep_data$ambient_noise_db),
-    max(sleep_data$caffeine_intake_mg),
-    max(sleep_data$next_day_fatigue_score),
-    max(sleep_data$physical_activity_min),
-    max(sleep_data$screen_time_before_bed_min),
-    max(sleep_data$sleep_efficiency_pct)
+    max(sleep_data_cleaned$ambient_noise_db),
+    max(sleep_data_cleaned$caffeine_intake_mg),
+    max(sleep_data_cleaned$next_day_fatigue_score),
+    max(sleep_data_cleaned$physical_activity_min),
+    max(sleep_data_cleaned$screen_time_before_bed_min),
+    max(sleep_data_cleaned$sleep_efficiency_pct)
   )
 )
 
-min_max
-min_max_plot <- data.frame(
-  Variable = rep(min_max$Variable, 2),
-  Statistic = c(
-    rep("Minimum", 6),
-    rep("Maximum", 6)
-  ),
-  Value = c(min_max$Minimum, min_max$Maximum)
-)
-ggplot(min_max_plot, aes(x = Variable, y = Value, fill = Statistic)) +
-  geom_col(position = "dodge") + 
-  geom_text(
-    aes(label = round(Value, 2)),
-    position = position_dodge(width = 0.9),
-    vjust = -0.5,
-    size = 3
-  ) +
-  labs(
-    title = "Minimum and Maximum Values by Variable",
-    x = "Variable",
-    y = "Value",
-    fill = "Statistic"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(
-  "minimum_maximum_plot.png",
-  width = 10,
-  height = 7,
-  dpi = 300
-)
+print(min_max_table)
+view(min_max_table)
+write.csv(min_max_table, "min_max_table.csv", row.names = FALSE)

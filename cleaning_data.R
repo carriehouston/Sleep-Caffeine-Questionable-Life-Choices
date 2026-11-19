@@ -1,4 +1,6 @@
 library(tidyverse)
+library(ggplot2)
+library(tidymodels)
 
 sleep_data <- read.csv("sleep_debt_screen_time.csv")
 
@@ -37,8 +39,6 @@ sleep_data_cleaned$blue_light_filter_on <- factor(
   labels = c("Filter Off", "Filter On")
 )
 #verifying that screen time and caffeine intake are skewed now
-library(ggplot2)
-
 ggplot(sleep_data_cleaned,
        aes(x = caffeine_intake_mg)) +
   geom_histogram(bins = 40) +
@@ -49,3 +49,16 @@ ggplot(sleep_data_cleaned,
   geom_histogram(bins = 40) +
   labs(title = "Screen Time Distribution")
 ggsave("screen_time.png", width = 8, height = 6, dpi = 300)
+
+sleep_data_cleaned <- sleep_data_cleaned |>
+  select(
+    screen_time_before_bed_min,
+    caffeine_intake_mg,
+    physical_activity_min,
+    ambient_noise_db,
+    blue_light_filter_on,
+    sleep_efficiency_pct,
+    next_day_fatigue_score
+  ) |>
+  na.omit()
+write_csv(sleep_data_cleaned, "cleaned_sleep_data.csv")
