@@ -1,7 +1,7 @@
-"Variable","Minimum","Maximum"
-"Ambient Noise (dB)",10,70
-"Caffeine Intake (mg)",0,500
-"Next-Day Fatigue Score",1.07,8.85
-"Physical Activity (min)",0,180
-"Screen Time Before Bed (min)",5,240
-"Sleep Efficiency (%)",59.6,95.4
+Variable,Minimum,Maximum
+Ambient Noise (dB),10,70
+Caffeine Intake (mg),0,500
+Next-Day Fatigue Score,1.07,8.85
+Physical Activity (min),0,180
+Screen Time Before Bed (min),5,240
+Sleep Efficiency (%),59.6,95.4
