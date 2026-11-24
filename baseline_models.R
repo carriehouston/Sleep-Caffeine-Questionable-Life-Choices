@@ -1,33 +1,13 @@
-
 library(tidyverse)
 library(tidymodels)
+library(ggplot2)
 
-# Load cleaned dataset
-sleep_data_cleaned <- read_csv(
-  "cleaned_sleep_data.csv",
-  show_col_types = FALSE
-)
+# Load shared datasets
+shared_data <- readRDS("shared_datasets.rds")
 
-# Set random seed for reproducibility
-set.seed(123)
-
-# Split data into 60% training and 40% remaining
-data_split <- initial_split(
-  sleep_data_cleaned,
-  prop = 0.60
-)
-
-train_data <- training(data_split)
-remaining_data <- testing(data_split)
-
-# Split remaining data into validation and testing
-remaining_split <- initial_split(
-  remaining_data,
-  prop = 0.50
-)
-
-validation_data <- training(remaining_split)
-test_data <- testing(remaining_split)
+train_data <- shared_data$train_data
+validation_data <- shared_data$validation_data
+test_data <- shared_data$test_data
 
 # Sleep efficiency mean baseline
 sleep_mean <- mean(train_data$sleep_efficiency_pct)
@@ -63,3 +43,49 @@ baseline_results <- data.frame(
 )
 
 print(baseline_results)
+# Sleep efficiency baseline visualization
+ggplot(test_data,
+       aes(x = sleep_efficiency_pct, y = sleep_baseline)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_abline(
+    slope = 1,
+    intercept = 0,
+    linetype = "dashed",
+    color = "pink"
+  ) +
+  labs(
+    title = "Mean Baseline: Actual vs Predicted Sleep Efficiency",
+    x = "Actual Sleep Efficiency (%)",
+    y = "Predicted Sleep Efficiency (%)"
+  ) +
+  theme_minimal()
+
+ggsave(
+  "sleep_efficiency_baseline_predictions.png",
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+# Next-day fatigue baseline visualization
+ggplot(test_data,
+       aes(x = next_day_fatigue_score, y = fatigue_baseline)) +
+  geom_point(alpha = 0.5, color = "purple") +
+  geom_abline(
+    slope = 1,
+    intercept = 0,
+    linetype = "dashed",
+    color = "pink"
+  ) +
+  labs(
+    title = "Mean Baseline: Actual vs Predicted Next-Day Fatigue",
+    x = "Actual Next-Day Fatigue Score",
+    y = "Predicted Next-Day Fatigue Score"
+  ) +
+  theme_minimal()
+
+ggsave(
+  "next_day_fatigue_baseline_predictions.png",
+  width = 8,
+  height = 6,
+  dpi = 300
+)

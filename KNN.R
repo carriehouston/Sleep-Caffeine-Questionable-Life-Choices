@@ -2,32 +2,17 @@ library(tidyverse)
 library(ggplot2)
 library(tidymodels)
 library(kknn)
-sleep_data_cleaned <- read.csv("cleaned_sleep_data.csv")
-# sleep efficiency KNN
-# KNN regression libraries and setup
-library(tidyverse)
-library(tidymodels)
-library(kknn)
-sleep_knn <- sleep_data_cleaned |>
-  select(
-    sleep_efficiency_pct,
-    screen_time_before_bed_min,
-    caffeine_intake_mg,
-    physical_activity_min,
-    ambient_noise_db,
-    blue_light_filter_on
-  ) |>
-  na.omit()
-set.seed(2026)
-# split data up
-split <- initial_validation_split(
-  sleep_knn,
-  prop = c(0.6, 0.2)
-)
+# Load shared datasets
+shared_data <- readRDS("shared_datasets.rds")
 
-train <- training(split)
-val <- validation(split)
-test <- testing(split)
+train_data <- shared_data$train_data
+validation_data <- shared_data$validation_data
+test_data <- shared_data$test_data
+
+# Use existing KNN variable names
+train <- train_data
+val <- validation_data
+test <- test_data
 # create recipe
 rec <- recipe(
   sleep_efficiency_pct ~
@@ -157,28 +142,7 @@ sleep_efficiency_pct_baseline_rmse <- sqrt(mean(
 
 sleep_efficiency_pct_baseline_rmse
 
-#next day fatigue score
-# KNN regression  setup
-sleep_knn <- sleep_data_cleaned |>
-  select(
-    next_day_fatigue_score,
-    screen_time_before_bed_min,
-    caffeine_intake_mg,
-    physical_activity_min,
-    ambient_noise_db,
-    blue_light_filter_on
-  ) |>
-  na.omit()
-set.seed(2026)
-# split data up
-split <- initial_validation_split(
-  sleep_knn,
-  prop = c(0.6, 0.2)
-)
 
-train <- training(split)
-val <- validation(split)
-test <- testing(split)
 # create recipe
 rec <- recipe(
   next_day_fatigue_score ~
