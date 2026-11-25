@@ -19,8 +19,7 @@ fatigue_mean <- mean(train_data$next_day_fatigue_score)
 sleep_mean
 fatigue_mean
 
-# Create baseline predictions for testing data
-test_data$sleep_baseline <- sleep_mean
+test_data$sleep_baseline <- sleep_mean# Create baseline predictions for testing data
 test_data$fatigue_baseline <- fatigue_mean
 
 # Calculate sleep efficiency baseline RMSE

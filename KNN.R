@@ -13,6 +13,7 @@ test_data <- shared_data$test_data
 train <- train_data
 val <- validation_data
 test <- test_data
+str(train$blue_light_filter_on)
 # create recipe
 rec <- recipe(
   sleep_efficiency_pct ~
@@ -129,20 +130,6 @@ ggsave(
   height = 6,
   dpi = 300
 )
-
-# Baseline prediction for Sleep efficiency
-sleep_efficiency_pct_baseline_prediction <- mean(
-  train$sleep_efficiency_pct
-)
-
-# Baseline RMSE on test data for sleep efficiency
-sleep_efficiency_pct_baseline_rmse <- sqrt(mean(
-  (test$sleep_efficiency_pct - sleep_efficiency_pct_baseline_prediction)^2
-))
-
-sleep_efficiency_pct_baseline_rmse
-
-
 # create recipe
 rec <- recipe(
   next_day_fatigue_score ~
@@ -256,13 +243,4 @@ ggsave(
   height = 6,
   dpi = 300
 )
-# Next-day fatigue baseline
-fatigue_baseline_prediction <- mean(
-  train$next_day_fatigue_score
-)
 
-fatigue_baseline_rmse <- sqrt(mean(
-  (test$next_day_fatigue_score -
-     fatigue_baseline_prediction)^2
-))
-fatigue_baseline_rmse

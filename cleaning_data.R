@@ -33,11 +33,11 @@ variables <- c(
 sapply(sleep_data_cleaned[variables], count_outliers)
 
 # Convert blue light filter to categorical variable
-sleep_data_cleaned$blue_light_filter_on <- factor(
-  sleep_data_cleaned$blue_light_filter_on,
-  levels = c(FALSE, TRUE),
-  labels = c("Filter Off", "Filter On")
-)
+# Convert blue light filter to categorical variable
+sleep_data_cleaned$blue_light_filter_on <- 
+  as.factor(sleep_data_cleaned$blue_light_filter_on)
+str(sleep_data_cleaned$blue_light_filter_on)
+levels(sleep_data_cleaned$blue_light_filter_on)
 #verifying that screen time and caffeine intake are skewed now
 ggplot(sleep_data_cleaned,
        aes(x = caffeine_intake_mg)) +
