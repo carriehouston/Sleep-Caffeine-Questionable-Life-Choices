@@ -55,7 +55,8 @@ ks <- c(1,2,3,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90)
 errors <- sapply(ks, val_rmse)
 
 best_k <- ks[which.min(errors)]
-
+sleep_best_k <- best_k
+sleep_val_rmse <- min(errors)
 best_k
 k_results <- data.frame(
   K = ks,
@@ -78,7 +79,7 @@ ggplot(k_results, aes(x = K, y = RMSE)) +
   theme_minimal()
 
 ggsave(
-  "sleep_efficiency_k_selection.png",
+  "KNN_Regression/sleep_efficiency_k_selection.png",
   width = 8,
   height = 6,
   dpi = 300
@@ -102,11 +103,11 @@ test_preds <- augment(
   new_data = test
 )
 
-rmse(
+sleep_test_rmse <- rmse(
   test_preds,
   truth = sleep_efficiency_pct,
   estimate = .pred
-)
+)$.estimate
 
 ggplot(test_preds,
        aes(x = sleep_efficiency_pct, y = .pred)) +
@@ -117,6 +118,11 @@ ggplot(test_preds,
     linetype = "dashed",
     color = "pink"
   ) +
+  coord_equal(
+    xlim = c(0, 100),
+    ylim = c(0, 100),
+    expand = FALSE
+  ) +
   labs(
     title = "KNN: Actual vs Predicted Sleep Efficiency",
     x = "Actual Sleep Efficiency (%)",
@@ -125,7 +131,7 @@ ggplot(test_preds,
   theme_minimal()
 
 ggsave(
-  "sleep_efficiency_predictions.png",
+  "KNN_Regression/sleep_efficiency_predictions.png",
   width = 8,
   height = 6,
   dpi = 300
@@ -171,7 +177,8 @@ ks <- c(1,2,3,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90)
 errors <- sapply(ks, val_rmse)
 
 best_k <- ks[which.min(errors)]
-
+fatigue_best_k <- best_k
+fatigue_val_rmse <- min(errors)
 best_k
 k_results <- data.frame(
   K = ks,
@@ -193,7 +200,7 @@ ggplot(k_results, aes(x = K, y = RMSE)) +
   theme_minimal()
 
 ggsave(
-  "next_day_fatigue_score_k_selection.png",
+  "KNN_Regression/next_day_fatigue_score_k_selection.png",
   width = 8,
   height = 6,
   dpi = 300
@@ -216,11 +223,11 @@ test_preds <- augment(
   new_data = test
 )
 
-rmse(
+fatigue_score_test_rmse <- rmse(
   test_preds,
   truth = next_day_fatigue_score,
   estimate = .pred
-)
+)$.estimate
 ggplot(test_preds,
        aes(x = next_day_fatigue_score, y = .pred)) +
   geom_point(alpha = 0.5) +
@@ -230,6 +237,11 @@ ggplot(test_preds,
     linetype = "dashed",
     color = "purple"
   ) +
+  coord_equal(
+    xlim = c(0, 10),
+    ylim = c(0, 10),
+    expand = FALSE
+  ) +
   labs(
     title = "KNN: Actual vs Predicted Next Day Fatigue Score",
     x = "Actual Next Day Fatigue Score",
@@ -238,9 +250,23 @@ ggplot(test_preds,
   theme_minimal()
 
 ggsave(
-  "next_day_fatigue_predictions.png",
+  "KNN_Regression/next_day_fatigue_predictions.png",
   width = 8,
   height = 6,
   dpi = 300
 )
+# Combine KNN regression results
+knn_results <- data.frame(
+  Outcome = c("Sleep Efficiency", "Next-Day Fatigue"),
+  Best_K = c(sleep_best_k, fatigue_best_k),
+  Validation_RMSE = c(sleep_val_rmse, fatigue_val_rmse),
+  Testing_RMSE = c(sleep_test_rmse, fatigue_score_test_rmse)
+)
 
+print(knn_results)
+
+# Save results to CSV
+write_csv(
+  knn_results,
+  "KNN_Regression/knn_results.csv"
+)

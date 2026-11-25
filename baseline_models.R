@@ -42,6 +42,7 @@ baseline_results <- data.frame(
 )
 
 print(baseline_results)
+write_csv(baseline_results, "Baseline_Models/baseline_results.csv")
 # Sleep efficiency baseline visualization
 ggplot(test_data,
        aes(x = sleep_efficiency_pct, y = sleep_baseline)) +
@@ -52,6 +53,11 @@ ggplot(test_data,
     linetype = "dashed",
     color = "pink"
   ) +
+  coord_equal(
+    xlim = c(0, 100),
+    ylim = c(0, 100),
+    expand = FALSE
+  ) +
   labs(
     title = "Mean Baseline: Actual vs Predicted Sleep Efficiency",
     x = "Actual Sleep Efficiency (%)",
@@ -60,7 +66,7 @@ ggplot(test_data,
   theme_minimal()
 
 ggsave(
-  "sleep_efficiency_baseline_predictions.png",
+  "Baseline_Models/sleep_efficiency_baseline_predictions.png",
   width = 8,
   height = 6,
   dpi = 300
@@ -75,6 +81,11 @@ ggplot(test_data,
     linetype = "dashed",
     color = "pink"
   ) +
+  coord_equal(
+    xlim = c(0, 10),
+    ylim = c(0, 10),
+    expand = FALSE
+  ) +
   labs(
     title = "Mean Baseline: Actual vs Predicted Next-Day Fatigue",
     x = "Actual Next-Day Fatigue Score",
@@ -83,7 +94,7 @@ ggplot(test_data,
   theme_minimal()
 
 ggsave(
-  "next_day_fatigue_baseline_predictions.png",
+  "Baseline_Models/next_day_fatigue_baseline_predictions.png",
   width = 8,
   height = 6,
   dpi = 300
