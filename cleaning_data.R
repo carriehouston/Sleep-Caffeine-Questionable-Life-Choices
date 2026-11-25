@@ -33,7 +33,6 @@ variables <- c(
 sapply(sleep_data_cleaned[variables], count_outliers)
 
 # Convert blue light filter to categorical variable
-# Convert blue light filter to categorical variable
 sleep_data_cleaned$blue_light_filter_on <- 
   as.factor(sleep_data_cleaned$blue_light_filter_on)
 str(sleep_data_cleaned$blue_light_filter_on)
